@@ -1,0 +1,114 @@
+video::-webkit-media-controls-enclosure {
+    overflow:hidden;
+}
+
+video::-webkit-media-controls-panel {
+    display:none;
+}
+
+.video {
+    width: 470px;
+    height: 360px;
+    border: 1px solid black;
+    background-image: url("../images/calling.png");
+    background-position: center;
+    background-repeat: no-repeat
+}
+html, body {
+  width:100%;
+  height:100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  background-color:black;
+}
+#base {
+  position: relative;
+  height:100%;
+}
+#itemArea {
+  position:fixed;
+  top: 30px;
+  left: 0;
+  width:60px;
+  padding:5px;
+  height:100%;
+  border-right: 1px solid #E5E5FF;
+  border-bottom: 1px solid #E5E5FF;
+  background-color: #F5F5FF;
+  z-index: 999;
+  height: 100%;
+}
+#videoArea{
+  top:30px;
+  left: 0;
+  padding-left:80px;
+  padding-top:10px;
+  background-color: black;
+  height: 100%;
+}
+.imgButton img{
+  width: 100%;
+  margin-bottom: 10px;
+}
+.imgButton {
+  background-color:rgba(255,255,255,0);
+  border: 0 solid #FFF;
+  cursor: pointer;
+}
+
+#header{
+  position: fixed;
+  z-index: 999;
+  width:100%;
+  top:0;
+  left:0;
+  background-color: #666;
+  color:white;
+  padding-left:5px;
+  border-bottom: 1px solid #999;
+  margin:0;
+  font-family: arial, sans-serif;
+  font-size:15px;
+  height:30px;
+}
+
+#header img {
+  margin-top:5px;
+  height:20px;
+}
+
+.dialog{
+  position: fixed;
+  background-color:white;
+  top:40%;
+  left:25%;
+  width:50%;
+  height:20%;
+  border-radius: 10px;
+  z-index: 9999;
+  text-align:center;
+  padding:10px;
+  display: table-cell;
+	vertical-align: middle;
+  display: none;
+  opacity: 0;
+}
+
+.square_btn {
+    position: relative;
+    display: inline-block;
+    padding: 0.25em 0.5em;
+    text-decoration: none;
+    color: #FFF;
+    background: #666666;/*背景色*/
+    border-bottom: solid 2px #333333;/*少し濃い目の色に*/
+    border-radius: 4px;/*角の丸み*/
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 2px 2px rgba(0, 0, 0, 0.19);
+    font-weight: bold;
+}
+
+.square_btn:active {
+    border-bottom: solid 2px #AAA;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.30);
+}

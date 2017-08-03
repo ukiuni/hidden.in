@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>hidden.in</title>
+    <link rel="stylesheet" type="text/css" href="css/app.css">
+    <link type="css" href="css/app.css"></link>
+</head>
+
+<body>
+    <div id="header">
+        <img src="images/logo.png">
+    </div>
+    <div id="base">
+        <div id="itemArea">
+            <button class="imgButton" onclick="startVideo();"><img src="images/video.png" /></button>
+            <button class="imgButton" onclick="startScreenShare();"><img src="images/screen.png" /></button>
+            <button class="imgButton" onclick="reloadFunction();"><img src="images/reload.png" /></button>
+            <button class="imgButton" onclick="showLink();"><img src="images/link.png" /></button>
+            <button class="imgButton" onclick="stop();"><img src="images/switch.png" /></button>
+        </div>
+        <div id="videoArea">
+            <video id="localVideo" class="video" autoplay></video>
+            <span id="remoteArea"></span>
+        </div>
+        <br style="clear:both" />
+    </div>
+    <script src="js/screenshare.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/index.js"></script>
+    <div id="chromeExtensionInstallDialog" class="dialog">
+        Drag &amp; drop "screenshare_chrome_extension.crx" as file downloaded to <a target="_brank" href="chrome://extensions/">chrome://extensions/</a>        .<br /> Open chrome://extensions at new tab by yourself please.<br />
+        <button class="square_btn" id="chromeExtensionInstallDialogCloseButton">close</button>
+    </div>
+    <div id="screenShareOnlySupportedWithChrome" class="dialog">
+        Screen share only supported with chrome.<br />
+        And you should use <a href="https://www.google.co.jp/chrome/browser/desktop/index.html">chrome</a>.
+    </div>
+</body>
+
+</html>

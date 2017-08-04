@@ -1,11 +1,20 @@
 var express = require('express'),
-  http = require('http'),
   fs = require('fs'),
-  path = require('path')
+  path = require('path');
 var app = express();
 var port = process.env.PORT || 3000;
-
-var server = http.createServer(app);
+var options = {
+  key: fs.readFileSync(process.env.KEY || './cert/private.pem'),
+  cert: fs.readFileSync(process.env.CERT || './cert/cert.pem')
+};
+var server
+if ("true" == process.env.HTTP) {
+  console.log("mode http")
+  server = require('http').createServer(app);
+} else {
+  console.log("mode https")
+  server = require('https').createServer(options, app);
+}
 var io = require('socket.io').listen(server);
 app.use(express.static('static'));
 app.get("/:channel", function (request, response) {
@@ -19,7 +28,7 @@ app.get("/:channel", function (request, response) {
   var readStream = fs.createReadStream(filePath);
   readStream.pipe(response);
 });
-server.listen(port, function () {
+server.listen(port, function (error) {
   console.log('listening on *:' + port);
 });
 var store = {};

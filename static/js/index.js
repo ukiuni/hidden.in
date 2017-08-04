@@ -99,7 +99,20 @@ function sendAnswer(event) {
         console.log("Create Answer failed");
     }, mediaConstraints);
 }
-
+function openDialog(dialog, opacity, degree) {
+    newOpacity = (opacity * degree);
+    if (newOpacity > 1) {
+        dialog.style.opacity = 1;
+    } else if (newOpacity < 0.001) {
+        dialog.style.opacity = 0;
+        dialog.style.display = "none";
+    } else {
+        dialog.style.opacity = newOpacity;
+        setTimeout(function () {
+            openDialog(dialog, newOpacity, degree);
+        }, 30);
+    }
+}
 function prepareNewConnection(remoteId) {
     var RTCPeerConnection = RTCPeerConnection || webkitRTCPeerConnection;
     var pc_config = { "iceServers": [] };
@@ -199,23 +212,9 @@ function startScreenShare() {
         }
         dialog.style.display = "block";
         document.getElementById("chromeExtensionInstallDialogCloseButton").onclick = function () {
-            openDialog(1, 0.9);
+            openDialog(dialog, 1, 0.9);
         }
-        var openDialog = function (opacity, degree) {
-            newOpacity = (opacity * degree);
-            if (newOpacity > 1) {
-                dialog.style.opacity = 1;
-            } else if (newOpacity < 0.001) {
-                dialog.style.opacity = 0;
-                dialog.style.display = "none";
-            } else {
-                dialog.style.opacity = newOpacity;
-                setTimeout(function () {
-                    openDialog(newOpacity, degree);
-                }, 30);
-            }
-        }
-        openDialog(0.01, 1.2);
+        openDialog(dialog, 0.01, 1.2);
         return;
     }
     reloadFunction = startScreenShare;
@@ -277,5 +276,19 @@ function stopPeer(id) {
     peerConnections[id].removeElement();
     peerConnections[id].close();
     delete peerConnections[id];
+}
+function showLink() {
+    var dialog = document.getElementById("linkDialog");
+    dialog.style.display = "block";
+    var linkText = document.getElementById("linkText");
+    linkText.value = location.href;
+    document.getElementById("linkCopyButton").onclick = function () {
+        linkText.select();
+        var retVal = document.execCommand('copy');
+    }
+    openDialog(dialog, 0.01, 1.2);
+    document.getElementById("linkDialogCloseButton").onclick = function () {
+        openDialog(dialog, 1, 0.9);
+    }
 }
 setTimeout(startVideo, 0);

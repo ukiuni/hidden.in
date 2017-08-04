@@ -112,3 +112,31 @@ html, body {
     border-bottom: solid 2px #AAA;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.30);
 }
+
+.inputText {
+  font-size:30px;
+  line-height: 30px;
+  height:40px;
+  padding:5px;
+  border-radius: 7px 0 0 7px;
+  border-color: #666;
+  box-sizing: border-box;
+  position:relative;
+  top:-4px;
+}
+
+.textButton {
+  box-sizing: border-box;
+  height:40px;
+  border-radius: 0 7px 7px 0;
+  position:relative;
+  top:0;
+}
+
+.textButton img{
+  height: 100%;
+}
+
+.inputArea {
+  position:relative;
+}

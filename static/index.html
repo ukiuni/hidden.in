@@ -5,8 +5,23 @@
     <title>hidden.in</title>
     <link rel="stylesheet" type="text/css" href="css/app.css">
     <style>
+        html,
+        body,
+        div,
+        p,
+        img {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 100%;
+            width: 100%;
+        }
+
         body {
             position: relative;
+            width: 100%;
         }
 
         #logo p {
@@ -64,6 +79,7 @@
             z-index: 999;
             border-radius: 5px;
             color: white;
+            margin: 0;
             background-color: rgba(0, 0, 0, 100);
             border: 1px solid rgba(100, 100, 100, 100);
         }
@@ -72,13 +88,56 @@
             text-align: center;
             position: relative;
             top: -150px;
+            max-width: 100%;
+            padding: 0;
+        }
+
+        @media screen and (max-width: 480px) {
+            input {
+                width: 90%;
+                box-sizing: border-box;
+                margin-left: 2%;
+            }
+
+            .titleImg {
+                width: 90%;
+                margin-left: 2%;
+            }
+        }
+
+        @media screen and (min-width: 481px) {
+            input {
+                width: 50%;
+            }
         }
 
         #article {
             text-align: center;
             color: white;
         }
+
+        .codeDiv {
+            background-color: darkgray;
+            border-radius: 3px;
+            border: 1px solid #666;
+            width: 80%;
+            margin-left: 6%;
+            text-align: left;
+            padding: 10px;
+        }
+
+        pre {
+            margin: 0;
+            font-size: 1rem;
+            overflow: hidden;
+        }
+
+        code {
+            font-size: 1rem;
+            color: #333;
+        }
     </style>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 
 <body>
@@ -86,10 +145,10 @@
         <div id="readImage">
         </div>
         <p>
-            You might use the saas but
+            You might use the SaaS but
         </p>
         <p>
-            <img src="images/logo.png">
+            <img class="titleImg" src="images/logo.png">
         </p>
     </div>
     <div id="inputArea">
@@ -101,11 +160,29 @@
             You need video chat and screen cast when remote work.
         </p>
         <p>
-            You should better to use internet Service.<br /> It's well mentenanced and supported.
+            You should better to use internet service.<br /> It's well mentenanced and supported.
         </p>
         <p>
-            But someone (like me) can't use Saas but only use on-premises application,<br /> Use this application "hidden.in".<br
-            /> This is open sourced application (Apache-2.0) and easy to start on your server. You can send issue to <a href="//github.com/ukiuni/hidden.in">GitHub</a>
+            But someone (like me) can't use Saas but only use on-premises application,<br /> Use this application "hidden.in".
+        </p>
+        <p class="onlySampleSite">
+            This site is sample. I recommend using hidden.in on your infrastructure and limited network.<br /> Install is
+            easy.
+            <br /> With docker<br />
+            <div class="codeDiv">
+                <pre><code>$sudo docker run -p 443:3000 ukiuni/hidden.in</code></pre>
+            </div>
+            or with node
+            <div class="codeDiv">
+                <pre><code>$git clone https://github.com/ukiuni/hidden.in.git
+$cd hidden.in &amp;&amp; npm install &amp;&amp; npm start</code></pre>
+            </div>
+        </p>
+        <p>
+            This is open sourced (Apache-2.0) software and easy to start on your server.
+        </p>
+        <p>
+            You can send issue to <a href="//github.com/ukiuni/hidden.in" style="color:white">GitHub</a>
         </p>
     </div>
     <script>

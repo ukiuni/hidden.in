@@ -3,7 +3,7 @@ You can use it for Video communication and Screen share.
 
 ![hidden.in useing](http://i.imgur.com/Bcxs7dP.png "with embedded image. u don't wanna show ugly old farts. uh?")
 
-# node
+# Node.js
 ```
 git clone https://github.com/ukiuni/hidden.in
 cd hidden.in && npm install && npm start

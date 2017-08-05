@@ -5,6 +5,7 @@
     <title>hidden.in</title>
     <link rel="stylesheet" type="text/css" href="css/app.css">
     <link type="css" href="css/app.css"></link>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 
 <body>
@@ -13,11 +14,11 @@
     </div>
     <div id="base">
         <div id="itemArea">
-            <button class="imgButton" onclick="startVideo();"><img src="images/video.png" /></button>
-            <button class="imgButton" onclick="startScreenShare();"><img src="images/screen.png" /></button>
-            <button class="imgButton" onclick="reloadFunction();"><img src="images/reload.png" /></button>
-            <button class="imgButton" onclick="showLink();"><img src="images/link.png" /></button>
-            <button class="imgButton" onclick="stop();"><img src="images/switch.png" /></button>
+            <button id="startVideoButton" class="imgButton" onclick="startVideo();"><img src="images/video.png" /></button>
+            <button id="startScreenShareButton" class="imgButton" onclick="startScreenShare();"><img src="images/screen.png" /></button>
+            <button id="reloadButton" class="imgButton" onclick="reloadFunction();"><img src="images/reload.png" /></button>
+            <button id="showLinkButton" class="imgButton" onclick="showLink();"><img src="images/link.png" /></button>
+            <button id="stopButton" class="imgButton" onclick="stop();"><img src="images/switch.png" /></button>
         </div>
         <div id="videoArea">
             <video id="localVideo" class="video" autoplay></video>

@@ -5,15 +5,70 @@ video::-webkit-media-controls-enclosure {
 video::-webkit-media-controls-panel {
     display:none;
 }
-
 .video {
+  border: 1px solid black;
+  background-image: url("../images/calling.png");
+  background-position: center;
+  background-repeat: no-repeat
+}
+@media screen and (max-width: 480px) {
+  .video {
+    width:100%;
+  }
+  #itemArea {
+    position:fixed;
+    bottom: 0;
+    left: 0;
+    width:100%;
+    height:50px;
+    border-top: 1px solid #E5E5FF;
+    background-color: #F5F5FF;
+    z-index: 999;
+  }
+  #startVideoButton, #startScreenShareButton, #showLinkButton{
+    display:none;
+  }
+  .imgButton {
+    width:50%;
+    height:100%;
+    float:left;
+  }
+  .imgButton img{
+    height: 100%;
+    margin-bottom: 10px;
+  }
+}
+@media screen and (min-width: 481px) {
+  .video {
     width: 470px;
     height: 360px;
-    border: 1px solid black;
-    background-image: url("../images/calling.png");
-    background-position: center;
-    background-repeat: no-repeat
+  }
+  #itemArea {
+    position:fixed;
+    top: 30px;
+    left: 0;
+    width:60px;
+    padding:5px;
+    height:100%;
+    border-right: 1px solid #E5E5FF;
+    border-bottom: 1px solid #E5E5FF;
+    background-color: #F5F5FF;
+    z-index: 999;
+  }
+  #videoArea{
+    top:30px;
+    left: 0;
+    padding-left:80px;
+    padding-top:10px;
+    background-color: black;
+    height: 100%;
+  }
+  .imgButton img{
+    width: 100%;
+    margin-bottom: 10px;
+  }
 }
+
 html, body {
   width:100%;
   height:100%;
@@ -25,31 +80,6 @@ html, body {
 #base {
   position: relative;
   height:100%;
-}
-#itemArea {
-  position:fixed;
-  top: 30px;
-  left: 0;
-  width:60px;
-  padding:5px;
-  height:100%;
-  border-right: 1px solid #E5E5FF;
-  border-bottom: 1px solid #E5E5FF;
-  background-color: #F5F5FF;
-  z-index: 999;
-  height: 100%;
-}
-#videoArea{
-  top:30px;
-  left: 0;
-  padding-left:80px;
-  padding-top:10px;
-  background-color: black;
-  height: 100%;
-}
-.imgButton img{
-  width: 100%;
-  margin-bottom: 10px;
 }
 .imgButton {
   background-color:rgba(255,255,255,0);

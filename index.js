@@ -32,8 +32,20 @@ server.listen(port, function (error) {
   console.log('listening on *:' + port);
 });
 var store = {};
+var ifLastDislock = function (room) {
+  io.to(room).clients(function (e, clients) {
+    if (0 == clients.length) {
+      delete lockedRooms[room];
+    }
+  });
+}
+var lockedRooms = [];
 var chat = io.sockets.on('connection', function (socket) {
   socket.on('join', function (req) {
+    if (lockedRooms[req.room]) {
+      io.to(socket.id).emit("lockouted", { id: socket.id, room: req.room });
+      return;
+    }
     socket.room = req.room;
     socket.join(req.room);
     io.to(socket.id).emit("joined", { id: socket.id });
@@ -49,10 +61,17 @@ var chat = io.sockets.on('connection', function (socket) {
     socket.to(message.targetId).emit('message', message);
   });
   socket.on('stop', function () {
+    socket.leave(socket.room);
+    ifLastDislock(socket.room);
     socket.broadcast.to(socket.room).emit('otherStoped', { id: socket.id });
   });
   socket.on('disconnect', function () {
+    ifLastDislock(socket.room);
     socket.broadcast.to(socket.room).emit('otherDisconnected', { id: socket.id });
   });
+  socket.on('lock', function () {
+    lockedRooms[socket.room] = true;
+    socket.broadcast.to(socket.room).emit('locked');
+  })
 });
 

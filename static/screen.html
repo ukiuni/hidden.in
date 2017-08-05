@@ -18,6 +18,7 @@
             <button id="startScreenShareButton" class="imgButton" onclick="startScreenShare();"><img src="images/screen.png" /></button>
             <button id="reloadButton" class="imgButton" onclick="reloadFunction();"><img src="images/reload.png" /></button>
             <button id="showLinkButton" class="imgButton" onclick="showLink();"><img src="images/link.png" /></button>
+            <button id="lockButton" class="imgButton" onclick="lockRoom();"><img src="images/lock.png" /></button>
             <button id="stopButton" class="imgButton" onclick="stop();"><img src="images/switch.png" /></button>
         </div>
         <div id="videoArea">
@@ -42,6 +43,10 @@
             <input class="inputText" type="text" id="linkText" /><button id="linkCopyButton" class="textButton"><img src="images/copy.png" /></button>
         </div>
         <button class="square_btn" id="linkDialogCloseButton">close</button>
+    </div>
+    <div id="lockoutedDialog" class="dialog">
+        This room is locked.<br/>
+        <button class="square_btn" onclick="location.href='/'">To Top</button>
     </div>
 </body>
 

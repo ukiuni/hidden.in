@@ -29,7 +29,7 @@ video::-webkit-media-controls-panel {
     display:none;
   }
   .imgButton {
-    width:50%;
+    width:33%;
     height:100%;
     float:left;
   }

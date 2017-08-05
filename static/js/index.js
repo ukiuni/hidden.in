@@ -29,7 +29,7 @@ socket.on('connect', function (event) {
     socketReady = true;
 })
 function joinToRoom() {
-    socket.json.emit("join", { room: location.pathname, id: selfId });
+    socket.json.emit("join", { room: location.pathname });
     socket.on('joined', function (event) {
         joinedToRoom = true;
         selfId = event.id;
@@ -66,6 +66,11 @@ function joinToRoom() {
         stopPeer(event.id);
     }).on("stop", function (event) {
         peerConnections[event.id].close();
+    }).on("lockouted", function (event) {
+        document.getElementById("lockoutedDialog").style.display = "block";
+        openDialog(document.getElementById("lockoutedDialog"), 0.01, 1.2);
+    }).on("locked", function (event) {
+        lockRoom(true);
     });
 }
 
@@ -171,9 +176,6 @@ function prepareStream(stream) {
     var resetPeerIds = []
     for (var key in peerConnections) {
         resetPeerIds.push(key);
-        socket.json.emit("stop", {
-            id: selfId
-        });
     }
     stopLocalStream();
     localStream = stream;
@@ -186,7 +188,6 @@ function prepareStream(stream) {
             sendOffer(id);
         });
     }
-
 }
 
 function startVideo() {
@@ -269,6 +270,9 @@ function stop() {
         closeAll(streams);
         delete peerConnections[key];
     }
+    socket.json.emit("stop", {
+        id: selfId
+    });
     location.href = "/";
 }
 
@@ -290,5 +294,17 @@ function showLink() {
     document.getElementById("linkDialogCloseButton").onclick = function () {
         openDialog(dialog, 1, 0.9);
     }
+}
+
+function lockRoom(displayOnly) {
+    var button = document.getElementById("lockButton");
+    button.onclick = unlockRoom;
+    button.getElementsByTagName("img")[0].src = "images/unlock.png";
+    if (!displayOnly) {
+        socket.json.emit("lock");
+    }
+}
+function unlockRoom() {
+    //u cant unlock. everyone must out.
 }
 setTimeout(startVideo, 0);

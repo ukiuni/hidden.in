@@ -136,6 +136,10 @@
             font-size: 1rem;
             color: #333;
         }
+
+        .onlySampleSite {
+            display: none;
+        }
     </style>
     <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
@@ -165,15 +169,18 @@
         <p>
             But someone (like me) can't use Saas but only use on-premises application,<br /> Use this application "hidden.in".
         </p>
+        <p>
+            hidden.in is secure because uses only your network.(not support turn.)
+        </p>
         <p class="onlySampleSite">
-            This site is sample. I recommend using hidden.in on your infrastructure and limited network.<br /> Install is
-            easy.
+            This site is sample. I recommend using hidden.in on your infrastructure and limited network.
+            <br /> Install is easy.
             <br /> With docker<br />
-            <div class="codeDiv">
+            <div class="codeDiv onlySampleSite">
                 <pre><code>$sudo docker run -p 443:3000 ukiuni/hidden.in</code></pre>
             </div>
-            or with node
-            <div class="codeDiv">
+            <span class="onlySampleSite">or with node</span>
+            <div class="codeDiv onlySampleSite">
                 <pre><code>$git clone https://github.com/ukiuni/hidden.in.git
 $cd hidden.in &amp;&amp; npm install &amp;&amp; npm start</code></pre>
             </div>
@@ -192,6 +199,11 @@ $cd hidden.in &amp;&amp; npm install &amp;&amp; npm start</code></pre>
                 location.href = input.value;
             }
         };
+        if (location.href.indexOf("hidden.in.ukiuni.com") > -1) {
+            [].forEach.call(document.getElementsByClassName("onlySampleSite"), function (e) {
+                e.style.display = "block";
+            });
+        }
     </script>
 </body>
 

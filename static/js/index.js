@@ -67,8 +67,7 @@ function joinToRoom() {
     }).on("stop", function (event) {
         peerConnections[event.id].close();
     }).on("lockouted", function (event) {
-        document.getElementById("lockoutedDialog").style.display = "block";
-        openDialog(document.getElementById("lockoutedDialog"), 0.01, 1.2);
+        openDialog("lockoutedDialog");
     }).on("locked", function (event) {
         lockRoom(true);
     });
@@ -104,7 +103,20 @@ function sendAnswer(event) {
         console.log("Create Answer failed");
     }, mediaConstraints);
 }
-function openDialog(dialog, opacity, degree) {
+function openDialog(dialog) {
+    if (typeof dialog === 'string') {
+        dialog = document.getElementById(dialog);
+    }
+    dialog.style.display = "block";
+    doDialogChange(dialog, 0.01, 1.2);
+}
+function closeDialog(dialog) {
+    if (typeof dialog === 'string') {
+        dialog = document.getElementById(dialog);
+    }
+    doDialogChange(dialog, 1, 0.9);
+}
+function doDialogChange(dialog, opacity, degree) {
     newOpacity = (opacity * degree);
     if (newOpacity > 1) {
         dialog.style.opacity = 1;
@@ -114,7 +126,7 @@ function openDialog(dialog, opacity, degree) {
     } else {
         dialog.style.opacity = newOpacity;
         setTimeout(function () {
-            openDialog(dialog, newOpacity, degree);
+            doDialogChange(dialog, newOpacity, degree);
         }, 30);
     }
 }
@@ -193,9 +205,7 @@ var firstActionForReload = true;//for fail to handshake;
 function initVideoArea() {
     setTimeout(function () {
         reloadFunction();
-        var videoArea = document.getElementById("videoArea");
-        videoArea.style.display = "block";
-        openDialog(videoArea, 0.01, 1.2);
+        openDialog("videoArea");
     }, 500);
 }
 function startVideo() {
@@ -223,11 +233,10 @@ function startScreenShare() {
         } else {
             var dialog = document.getElementById("screenShareOnlySupportedWithChrome");
         }
-        dialog.style.display = "block";
         document.getElementById("chromeExtensionInstallDialogCloseButton").onclick = function () {
-            openDialog(dialog, 1, 0.9);
+            closeDialog(dialog);
         }
-        openDialog(dialog, 0.01, 1.2);
+        openDialog(dialog);
         return;
     }
     reloadFunction = startScreenShare;
@@ -298,17 +307,15 @@ function stopPeer(id) {
     delete peerConnections[id];
 }
 function showLink() {
-    var dialog = document.getElementById("linkDialog");
-    dialog.style.display = "block";
     var linkText = document.getElementById("linkText");
     linkText.value = location.href;
     document.getElementById("linkCopyButton").onclick = function () {
         linkText.select();
         var retVal = document.execCommand('copy');
     }
-    openDialog(dialog, 0.01, 1.2);
+    openDialog("linkDialog");
     document.getElementById("linkDialogCloseButton").onclick = function () {
-        openDialog(dialog, 1, 0.9);
+        closeDialog("linkDialog");
     }
 }
 

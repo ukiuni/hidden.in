@@ -189,12 +189,24 @@ function prepareStream(stream) {
         });
     }
 }
-
+var firstActionForReload = true;//for fail to handshake;
+function initVideoArea() {
+    setTimeout(function () {
+        reloadFunction();
+        var videoArea = document.getElementById("videoArea");
+        videoArea.style.display = "block";
+        openDialog(videoArea, 0.01, 1.2);
+    }, 500);
+}
 function startVideo() {
     reloadFunction = startVideo;
     navigator.getUserMedia({ video: true, audio: true },
         function (stream) {
             prepareStream(stream);
+            if (firstActionForReload) {
+                initVideoArea();
+                firstActionForReload = false;
+            }
         },
         function (error) {
             console.error('fail ' + error.code);
@@ -231,6 +243,10 @@ function startScreenShare() {
                 var audioTrack = audioStream.getAudioTracks()[0];
                 stream.addTrack(audioTrack);
                 prepareStream(stream);
+                if (firstActionForReload) {
+                    initVideoArea();
+                    firstActionForReload = false;
+                }
             },
             function (error) {
                 console.error('failed ' + error.code);

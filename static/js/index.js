@@ -322,7 +322,7 @@ function showLink() {
 function lockRoom(displayOnly) {
     var button = document.getElementById("lockButton");
     button.onclick = unlockRoom;
-    button.getElementsByTagName("img")[0].src = "images/unlock.png";
+    button.getElementsByTagName("img")[0].src = "images/lock.png";
     if (!displayOnly) {
         socket.json.emit("lock");
     }

@@ -266,6 +266,33 @@ function startScreenShare() {
         console.error((error) + ' load screen failed');
     });
 }
+function mute() {
+    localStream.removeTrack(localStream.getAudioTracks()[0]);
+    var soundButton = document.getElementById("soundButton");
+    soundButton.onclick = appendsSound;
+    soundButton.getElementsByTagName("img")[0].src = "images/mute.png";
+    for (var key in peerConnections) {
+        sendOffer(key);
+    }
+}
+function appendsSound() {
+    navigator.getUserMedia({ video: false, audio: true },
+        function (audioStream) {
+            var audioTrack = audioStream.getAudioTracks()[0];
+            localStream.addTrack(audioTrack);
+            var soundButton = document.getElementById("soundButton")
+            soundButton.onclick = mute;
+            soundButton.getElementsByTagName("img")[0].src = "images/sound.png";
+            for (var key in peerConnections) {
+                sendOffer(key);
+            }
+        },
+        function (error) {
+            console.error('failed ' + error.code);
+            return;
+        }
+    );
+}
 
 function stopLocalStream() {
     if (localStream) {

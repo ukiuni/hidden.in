@@ -131,7 +131,7 @@ function doDialogChange(dialog, opacity, degree) {
     }
 }
 function prepareNewConnection(remoteId) {
-    var RTCPeerConnection = RTCPeerConnection || webkitRTCPeerConnection;
+    var RTCPeerConnection = window.RTCPeerConnection || window.webkitRTCPeerConnection || window.mozRTCPeerConnection; 
     var pc_config = { "iceServers": [] };
     var peer = null;
     try {
@@ -166,11 +166,15 @@ function prepareNewConnection(remoteId) {
         if (!remoteVideo) {
             remoteVideo = document.createElement("video");
             remoteVideo.className = "video";
+            remoteVideo.setAttribute("playsinline", true);
+            remoteVideo.setAttribute("autoplay", true);
+            remoteVideo.setAttribute("muted", true);
+            remoteVideo.setAttribute("controls", true);
             remoteVideo.id = elementId;
             document.getElementById("remoteArea").appendChild(remoteVideo);
             toFullScreenable(remoteVideo);
         }
-        remoteVideo.src = URL.createObjectURL(event.stream);
+        remoteVideo.srcObject = event.stream;
         remoteVideo.load();
         remoteVideo.play();
     }
@@ -191,7 +195,7 @@ function prepareStream(stream) {
     }
     stopLocalStream();
     localStream = stream;
-    localVideo.src = URL.createObjectURL(stream);
+    localVideo.srcObject = stream;
     localVideo.play();
     if (!joinedToRoom) {
         joinToRoom();
@@ -210,19 +214,17 @@ function initVideoArea() {
 }
 function startVideo() {
     reloadFunction = startVideo;
-    navigator.getUserMedia({ video: true, audio: true },
-        function (stream) {
-            prepareStream(stream);
-            if (firstActionForReload) {
-                initVideoArea();
-                firstActionForReload = false;
-            }
-        },
-        function (error) {
-            console.error('fail ' + error.code);
-            return;
+    var medias =  { video: true, audio: true } ;
+    navigator.mediaDevices.getUserMedia(medias).then(function(stream) {
+        prepareStream(stream);
+        if (firstActionForReload) {
+            initVideoArea();
+            firstActionForReload = false;
         }
-    );
+    }).catch(function(error) {
+        console.error('fail ' + error.code);
+        return;
+	});
 }
 var screenShare = new SkyWay.ScreenShare({ debug: true });
 function startScreenShare() {
@@ -246,22 +248,20 @@ function startScreenShare() {
         FrameRate: 30,
         audio: false
     }, function (stream) {
-        navigator.getUserMedia({ video: false, audio: true },
-            function (audioStream) {
-                stopLocalStream();
-                var audioTrack = audioStream.getAudioTracks()[0];
-                stream.addTrack(audioTrack);
-                prepareStream(stream);
-                if (firstActionForReload) {
-                    initVideoArea();
-                    firstActionForReload = false;
-                }
-            },
-            function (error) {
-                console.error('failed ' + error.code);
-                return;
+        var medias =  { video: false, audio: true } ;
+        navigator.mediaDevices.getUserMedia(medias).then(function(audioStream) {
+            stopLocalStream();
+            var audioTrack = audioStream.getAudioTracks()[0];
+            stream.addTrack(audioTrack);
+            prepareStream(stream);
+            if (firstActionForReload) {
+                initVideoArea();
+                firstActionForReload = false;
             }
-        );
+        }).catch(function(error) {
+            console.error('fail ' + error.code);
+            return;
+    	});
     }, function (error) {
         console.error((error) + ' load screen failed');
     });
@@ -276,22 +276,20 @@ function mute() {
     }
 }
 function appendsSound() {
-    navigator.getUserMedia({ video: false, audio: true },
-        function (audioStream) {
-            var audioTrack = audioStream.getAudioTracks()[0];
-            localStream.addTrack(audioTrack);
-            var soundButton = document.getElementById("soundButton")
-            soundButton.onclick = mute;
-            soundButton.getElementsByTagName("img")[0].src = "images/sound.png";
-            for (var key in peerConnections) {
-                sendOffer(key);
-            }
-        },
-        function (error) {
-            console.error('failed ' + error.code);
-            return;
+    var medias =  { audio: true } ;
+    navigator.mediaDevices.getUserMedia(medias).then(function(audioStream) {
+        var audioTrack = audioStream.getAudioTracks()[0];
+        localStream.addTrack(audioTrack);
+        var soundButton = document.getElementById("soundButton")
+        soundButton.onclick = mute;
+        soundButton.getElementsByTagName("img")[0].src = "images/sound.png";
+        for (var key in peerConnections) {
+            sendOffer(key);
         }
-    );
+    }).catch(function(error) {
+        console.error('failed ' + error.code);
+        return;
+    });
 }
 
 function stopLocalStream() {
